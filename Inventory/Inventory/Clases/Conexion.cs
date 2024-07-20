@@ -1,10 +1,15 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Inventory.Clases
 {
-    public class Connection
+    public class Conexion
     {
         public static string cadena_de_conexion = @"Server=" + App.SERVER + ";Database=" + App.DATABASE + ";User Id=" + App.USERID + ";Password=" + App.PASSWORD + ";";
         public static SqlConnection ConSql = new SqlConnection(cadena_de_conexion);

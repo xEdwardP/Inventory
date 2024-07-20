@@ -2,7 +2,7 @@
 {
     public class App
     {
-        public static string AppName = "Sistema Bibliotecario";
+        public static string AppName = "Sistema de Control de Inventario";
 
         // SQL SERVER
         //public static string SERVER = "(localdb)\\MSSQLLocalDB";
