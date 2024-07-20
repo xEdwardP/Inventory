@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSales));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -101,6 +101,7 @@
             this.BtnNew.Name = "BtnNew";
             this.BtnNew.Size = new System.Drawing.Size(76, 28);
             this.BtnNew.Text = "NUEVO";
+            this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
             // 
             // toolStripSeparator1
             // 
@@ -116,6 +117,7 @@
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(94, 28);
             this.BtnSave.Text = "GUARDAR";
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // toolStripSeparator2
             // 
@@ -131,6 +133,7 @@
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(94, 28);
             this.BtnCancel.Text = "CANCELAR";
+            this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // toolStripSeparator4
             // 
@@ -146,6 +149,7 @@
             this.BtnDelete.Name = "BtnDelete";
             this.BtnDelete.Size = new System.Drawing.Size(91, 28);
             this.BtnDelete.Text = "ELIMINAR";
+            this.BtnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // toolStripSeparator5
             // 
@@ -162,6 +166,7 @@
             this.BtnClose.Name = "BtnClose";
             this.BtnClose.Size = new System.Drawing.Size(68, 28);
             this.BtnClose.Text = "SALIR";
+            this.BtnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
             // label1
             // 
@@ -198,6 +203,7 @@
             this.TxtRTN.Name = "TxtRTN";
             this.TxtRTN.Size = new System.Drawing.Size(413, 27);
             this.TxtRTN.TabIndex = 52;
+            this.TxtRTN.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtRTN_KeyPress);
             // 
             // label3
             // 
@@ -275,6 +281,7 @@
             this.TxtQuantity.Name = "TxtQuantity";
             this.TxtQuantity.Size = new System.Drawing.Size(187, 27);
             this.TxtQuantity.TabIndex = 61;
+            this.TxtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtQuantity_KeyPress);
             // 
             // label9
             // 
@@ -314,8 +321,8 @@
             this.DgvData.AllowUserToDeleteRows = false;
             this.DgvData.AllowUserToResizeColumns = false;
             this.DgvData.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.AliceBlue;
-            this.DgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.AliceBlue;
+            this.DgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
             this.DgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DCOIDLOTE,
@@ -378,6 +385,7 @@
             this.BtnSearch.TabIndex = 73;
             this.BtnSearch.Text = "+";
             this.BtnSearch.UseVisualStyleBackColor = true;
+            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
             // TxtSearch
             // 

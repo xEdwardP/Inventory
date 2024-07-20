@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPurchases));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -53,8 +53,6 @@
             this.DtpDate = new System.Windows.Forms.DateTimePicker();
             this.TxtPrice = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.TxtILot = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -278,23 +276,6 @@
             this.label9.TabIndex = 60;
             this.label9.Text = "PRECIO:";
             // 
-            // TxtILot
-            // 
-            this.TxtILot.Location = new System.Drawing.Point(497, 73);
-            this.TxtILot.Name = "TxtILot";
-            this.TxtILot.Size = new System.Drawing.Size(407, 27);
-            this.TxtILot.TabIndex = 65;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(426, 76);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 19);
-            this.label4.TabIndex = 64;
-            this.label4.Text = "IDLOTE";
-            // 
             // label10
             // 
             this.label10.BackColor = System.Drawing.Color.Teal;
@@ -330,8 +311,8 @@
             this.DgvData.AllowUserToDeleteRows = false;
             this.DgvData.AllowUserToResizeColumns = false;
             this.DgvData.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
-            this.DgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.AliceBlue;
+            this.DgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.DgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DCOIDLOTE,
@@ -407,8 +388,6 @@
             this.Controls.Add(this.TxtSearch);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.TxtILot);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.TxtPrice);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.DtpDate);
@@ -465,8 +444,6 @@
         private System.Windows.Forms.DateTimePicker DtpDate;
         private System.Windows.Forms.TextBox TxtPrice;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox TxtILot;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox TxtSearch;
         private System.Windows.Forms.Label label11;
