@@ -11,6 +11,6 @@
 
         public static string USERID = "epineda";
         public static string PASSWORD = "123";
-        public static string DATABASE = "Biblioteca";
+        public static string DATABASE = "INVENTORY";
     }
 }

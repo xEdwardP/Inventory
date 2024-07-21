@@ -560,5 +560,55 @@ namespace Inventory.Clases
             }
             return rowsinserted;
         }
+
+        //metodo Harpoon -> Trae el ultimo registro
+        public string Harpoon(string Campo, string Tabla, string orderby = "", string Condicion = "", string register = "")
+        {
+            string target = "";
+            try
+            {
+                string Query;
+
+                if(register == "first")
+                {
+                    Query = "SELECT TOP 1 " + Campo + " AS TARGET FROM " + Tabla + "  WHERE " + Condicion;
+                }
+                else if (register == "last")
+                {
+                    Query = "SELECT TOP 1 " + Campo + " AS TARGET FROM " + Tabla + " WHERE " + Condicion + " ORDER BY " + orderby + " DESC";
+                }
+                else
+                {
+                    MessageBox.Show("HA OCURRIDO UN ERROR!");
+                    return null;
+                }
+                com = new SqlCommand(Query, Clases.Conexion.ConSql);
+                SqlDataReader Recordset;
+                Clases.Conexion.OpenConnection();
+                Recordset = com.ExecuteReader();
+
+                if (Recordset.Read())
+                {
+                    target = Recordset["TARGET"].ToString();
+                }
+                else
+                {
+                    MessageBox.Show("NO SE ENCONTRARON DATOS QUE MOSTRAR!", "ATENCIÓN", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+                Recordset.Close();
+                com.Dispose();
+                Clases.Conexion.CloseConnection();
+            }
+            catch (SqlException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+            finally
+            {
+                Clases.Conexion.EndsConnection();
+            }
+            return target;
+        }
+        //fin metodo GetLastRegister
     }
 }
