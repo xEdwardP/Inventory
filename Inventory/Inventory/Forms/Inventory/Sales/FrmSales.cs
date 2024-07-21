@@ -61,7 +61,7 @@ namespace Inventory.Forms.Inventory.Sales
             if (errors == 0)
             {
                 SetValues();
-                InventoryManagement2(product,quantity);
+                InventoryManagement(product,quantity);
                 if(errors == 0)
                 {
                     string fields = "IDVENTA, NFACTV, CLIENTE, RTN, IDPRODUCTO, CANTIDAD";
@@ -226,133 +226,49 @@ namespace Inventory.Forms.Inventory.Sales
         private void InventoryManagement(string producto, int cantidad)
         {
             string condition = "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'";
-            string firstreg = Repository.Harpoon("IDLOTE", "LOTES", "IDLOTE", condition, "first");
-            int stockl1 = Convert.ToInt16(Repository.Hook("STOCK", "LOTES", "IDLOTE='" + firstreg + "'"));
             int currentbalance = Convert.ToInt32(Repository.Hook("SALDOACTUAL", "PRODUCTOS", "IDPRODUCTO='" + producto + "'"));
-            var lastreg = Repository.Harpoon("STOCK", "LOTES", "IDLOTE", "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'", "last");
 
-            if (currentbalance > cantidad)
+            if (currentbalance >= cantidad && cantidad > 0)
             {
                 if (RbPEPS.Checked == true)
                 {
+                    // Buscamos los lotes
                     DataTable data = Repository.Find("LOTES", "IDLOTE, PRECIO, STOCK", condition);
-                    if (data != null)
+
+                    if (data.Rows.Count > 0)
                     {
-                        bool response = false;
+                        int _quantity;
 
                         for (int i = 0; i < data.Rows.Count; i++)
                         {
-                            int _quantity = Convert.ToInt16(data.Rows[2][i]);
+                            _quantity = Convert.ToInt16(Helpers.ReturnsNumber(data.Rows[i][2].ToString()));
 
                             if (cantidad == 0)
                             {
-                                response = true;
                                 break;
                             }
 
-                            if (cantidad > _quantity)
+                            else if (cantidad > _quantity)
                             {
-                                cantidad -= _quantity;
-                                Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + data.Rows[0][i] + "'");
-                                Repository.Update("LOTES", "STOCK = 0", "IDLOTE='" + data.Rows[3][i] + "'");
+                                cantidad = cantidad - _quantity;
+                                Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + data.Rows[i][0] + "'");
+                                Repository.Update("LOTES", "STOCK=0", "IDLOTE='" + data.Rows[i][0] + "'");
                             }
-                            else
+                            else if (_quantity >= cantidad)
                             {
-                                _quantity -= cantidad;
+                                _quantity = _quantity - cantidad;
                                 cantidad = 0;
-                                Repository.Update("LOTES", "STOCK=" + _quantity, "IDLOTE='" + data.Rows[3][i] + "'");
-                            }
-                        }
-                    }
-                }
-                else if (RbUEPS.Checked == true)
-                {
-                    // Implement UEPS logic
-                }
-                else if (RbAverageCost.Checked == true)
-                {
-                    // Implement average cost logic
-                }
-                else
-                {
-                    Helpers.MsgInfo("HA OCURRIDO UN ERROR AL INDICAR EL TIPO DE INVENTARIO.");
-                    errors++;
-                    return;
-                }
-            }
-            else
-            {
-                Helpers.MsgWarning($"NO HAY SUFICIENTE CANTIDAD EN STOCK, LA CANTIDAD EN STOCK ES {currentbalance}");
-                errors++;
-                return;
-            }
-        }
-
-        private void InventoryManagement2(string producto, int cantidad)
-        {
-            string condition = "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'";
-            //Primer Lote
-
-
-            string firstreg = Repository.Harpoon("IDLOTE", "LOTES", "IDLOTE", condition, "first");
-            int stockl1 = Convert.ToInt16(Repository.Hook("STOCK", "LOTES", "IDLOTE='" + firstreg + "'"));
-
-
-            int currentbalance = Convert.ToInt32(Repository.Hook("SALDOACTUAL", "PRODUCTOS", "IDPRODUCTO='" + producto + "'"));
-            var lastreg = Repository.Harpoon("STOCK", "LOTES", "IDLOTE", "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'", "last");
-
-            if (currentbalance >= cantidad)
-            {
-                if (RbPEPS.Checked == true)
-                {
-                    DataTable data = Repository.Find("LOTES", "IDLOTE, PRECIO, STOCK", condition);
-                    if (data.Rows.Count > 0)
-                    {
-                        if (stockl1 > 0 && stockl1 > cantidad)
-                        {
-                            stockl1 = stockl1 - cantidad;
-
-                            if (stockl1 == 0)
-                            {
-                                Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + firstreg + "'", "true");
-                                Repository.Update("LOTES", "STOCK=0", "IDLOTE='" + firstreg + "'", "true");
+                                Repository.Update("LOTES", "STOCK=" + _quantity + "", "IDLOTE='" + data.Rows[i][0] + "'");
+                                if (_quantity == 0)
+                                {
+                                    Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + data.Rows[i][0] + "'", "true");
+                                    Repository.Update("LOTES", "STOCK=0", "IDLOTE='" + data.Rows[i][0] + "'", "true");
+                                }
                             }
                             else
                             {
-                                Repository.Update("LOTES", "STOCK='" + stockl1 + "'", "IDLOTE='" + firstreg + "'", "true");
-                            }
-                        }
-                        else
-                        {
-                            int _quantity;
-
-                            for (int i = 0; i < data.Rows.Count; i++)
-                            {
-                                //_quantity = data.Rows[2][i];
-                                _quantity = Convert.ToInt16(Helpers.ReturnsNumber(data.Rows[i][2].ToString()));
-                                
-                                if(cantidad == 0)
-                                {
-                                    break;
-                                }
-
-                                else if (cantidad > _quantity)
-                                {
-                                    cantidad = cantidad - _quantity;
-                                    Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + data.Rows[i][0] + "'");
-                                    Repository.Update("LOTES", "STOCK=0", "IDLOTE='" + data.Rows[i][0] + "'");
-                                }
-                                else
-                                {
-                                    _quantity = _quantity - cantidad;
-                                    cantidad = 0;
-                                    Repository.Update("LOTES", "STOCK=" + _quantity + "", "IDLOTE='" + data.Rows[i][0] + "'");
-                                    if (_quantity == 0)
-                                    {
-                                        Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + data.Rows[i][0] + "'", "true");
-                                        Repository.Update("LOTES", "STOCK=0", "IDLOTE='" + data.Rows[i][0] + "'", "true");
-                                    }
-                                }
+                                Helpers.MsgWarning("OCURRIO UN ERROR AL TRATAR DE REALIZAR LOS CALCULOS DE LOTES!");
+                                return;
                             }
                         }
                     }
