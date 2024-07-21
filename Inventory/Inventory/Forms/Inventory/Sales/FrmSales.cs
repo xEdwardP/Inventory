@@ -35,7 +35,7 @@ namespace Inventory.Forms.Inventory.Sales
         private void BtnNew_Click(object sender, EventArgs e)
         {
             Clean();
-            AutoGenCode();
+            //AutoGenCode();
             StateButtons(false, true, false, false, true, false, false, false);
             StateControls(true);
 
@@ -54,25 +54,19 @@ namespace Inventory.Forms.Inventory.Sales
             {
                 SetValues();
                 InventoryManagement();
+
                 if (errors == 0)
                 {
-                    string fields = "IDVENTA, NFACTV, CLIENTE, RTN, IDPRODUCTO, CANTIDAD";
-                    string values = "'" + code + "', '" + nfact + "', '" + client + "', '" + rtn + "', '" + product + "', " + quantity + "";
+                    Helpers.MsgSuccess(Clases.Messages.MsgSave);
 
-                    if (Repository.Save("VENTAS", fields, values) > 0)
-                    {
-                        Helpers.MsgSuccess(Clases.Messages.MsgSave);
-                        Repository.SetLast(idmodule);
+                    // SALDO
+                    string condition = "IDPRODUCTO='" + product + "'";
+                    int st = Convert.ToInt16(Repository.Hook("SALDOACTUAL", "PRODUCTOS", condition));
+                    st -= quantity;
+                    Repository.Update("PRODUCTOS", "SALDOACTUAL='" + st + "'", condition);
 
-                        // SALDO
-                        string condition = "IDPRODUCTO='" + product + "'";
-                        int st = Convert.ToInt16(Repository.Hook("SALDOACTUAL", "PRODUCTOS", condition));
-                        st -= quantity;
-                        Repository.Update("PRODUCTOS", "SALDOACTUAL='" + st + "'", condition);
-
-                        Clean();
-                        StartForm();
-                    }
+                    Clean();
+                    StartForm();
                 }
             }
         }
@@ -88,6 +82,7 @@ namespace Inventory.Forms.Inventory.Sales
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
+            //
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
@@ -126,12 +121,10 @@ namespace Inventory.Forms.Inventory.Sales
         {
             BtnNew.Enabled = stnew;
             BtnSave.Enabled = stsave;
-            //BtnUpdate.Enabled = stupdate;
             BtnDelete.Enabled = stdelete;
             BtnCancel.Enabled = stcancel;
             BtnClose.Enabled = stexit;
             BtnSearch.Enabled = stsearch;
-            //BtnCancelSearch.Enabled = stsearch;
 
             RbPEPS.Enabled = inventory;
             RbUEPS.Enabled = inventory;
@@ -213,10 +206,11 @@ namespace Inventory.Forms.Inventory.Sales
             quantity = Convert.ToInt16(TxtQuantity.Text.Trim());
         }
 
+        // METODO CalcInventory -> REALIZA LOS CALCULOS DE INVENTARIO
         private void CalcInventory(string producto, int cantidad, string orderby)
         {
             string condition = "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'";
-            int currentbalance = Convert.ToInt32(Repository.Hook("SALDOACTUAL", "PRODUCTOS", "IDPRODUCTO='" + producto + "'"));
+            int currentbalance = Convert.ToInt32(Repository.Hook("SALDOACTUAL", "PRODUCTOS", "IDPRODUCTO='" + producto + "'")); // SALDO ACTUAL
 
             if (currentbalance >= cantidad && cantidad > 0)
             {
@@ -226,28 +220,64 @@ namespace Inventory.Forms.Inventory.Sales
                 if (data.Rows.Count > 0)
                 {
                     int _quantity;
+                    double total, price, cant;
+                    string fields = "", values = "";
 
                     for (int i = 0; i < data.Rows.Count; i++)
                     {
-                        _quantity = Convert.ToInt16(Helpers.ReturnsNumber(data.Rows[i][2].ToString()));
+                        _quantity = Convert.ToInt16(Helpers.ReturnsNumber(data.Rows[i][2].ToString())); // CANTIDAD EN LOTE
 
                         if (cantidad == 0)
                         {
-                            break;
+                            break; // FIN DEL BUCLE
                         }
                         else if (cantidad > _quantity)
                         {
+                            // RECUPERANDO LA INFORMACION DE LA VENTA
+                            cant = 0;
+                            price = Convert.ToDouble(data.Rows[i][1].ToString()); // PRECIO UND
+                            cant = Convert.ToDouble(_quantity); // CANTIDAD VENDIDA DEL LOTE
+                            total = cant * price;
+
+                            // RESTANDO LA CANTIDAD SOLICITADA - LA CANTIDAD DISPONIBLE EN EL LOTE
                             cantidad = cantidad - _quantity;
+
+                            // ACTUALIZANDO EL STOCK
                             Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + data.Rows[i][0] + "'");
                             Repository.Update("LOTES", "STOCK=0", "IDLOTE='" + data.Rows[i][0] + "'");
+
+                            // GUARDANDO LA VENTA
+                            AutoGenCode();
+                            fields = "IDVENTA, NFACTV, CLIENTE, RTN, IDPRODUCTO, CANTIDAD, TOTAL, IDLOTE";
+                            values = "'" + code + "', '" + nfact + "', '" + client + "', '" + rtn + "', '" + product + "', " + cant + ", " + total + ", '" + data.Rows[i][0] + "'";
+                            Repository.Save("VENTAS", fields, values);
+                            Repository.SetLast(idmodule);
                         }
                         else if (_quantity >= cantidad)
                         {
+                            // RECUPERANDO LA INFORMACION DE LA VENTA
+                            cant = 0;
+                            price = Convert.ToDouble(data.Rows[i][1].ToString()); // PRECIO UND
+                            cant = Convert.ToDouble(cantidad); // CANTIDAD VENDIDA DEL LOTE
+                            total = cant * price;
+
+                            // RESTANDO LA CANTIDAD DISPONIBLE EN EL LOTE - LA CANTIDAD SOLICITADA
                             _quantity = _quantity - cantidad;
                             cantidad = 0;
+
+                            // ACTUALIZANDO EL STOCK
                             Repository.Update("LOTES", "STOCK=" + _quantity + "", "IDLOTE='" + data.Rows[i][0] + "'");
+
+                            // GUARDANDO LA VENTA
+                            AutoGenCode();
+                            fields = "IDVENTA, NFACTV, CLIENTE, RTN, IDPRODUCTO, CANTIDAD, TOTAL, IDLOTE";
+                            values = "'" + code + "', '" + nfact + "', '" + client + "', '" + rtn + "', '" + product + "', " + cant + ", " + total + ", '" + data.Rows[i][0] + "'";
+                            Repository.Save("VENTAS", fields, values);
+                            Repository.SetLast(idmodule);
+
                             if (_quantity == 0)
                             {
+                                // ACTUALIZANDO EL STOCK
                                 Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + data.Rows[i][0] + "'", "true");
                                 Repository.Update("LOTES", "STOCK=0", "IDLOTE='" + data.Rows[i][0] + "'", "true");
                             }
@@ -273,6 +303,7 @@ namespace Inventory.Forms.Inventory.Sales
             }
         }
 
+        // METODO InventoryManagement -> MANEJO DE OPCIONES DE INVENTARIO
         private void InventoryManagement()
         {
             if(RbPEPS.Checked == true)
@@ -289,10 +320,12 @@ namespace Inventory.Forms.Inventory.Sales
             }
             else
             {
-                //
+                Helpers.MsgWarning("HA OCURRIDO UN ERROR CON EL TIPO DE INVENTARIO ELEGIDO!");
+                StartForm();
             }
         }
 
+        // METODO GetProducts -> TRAE LOS PRODUCTOS
         private void GetProducts()
         {
             DataTable data = Repository.Find("PRODUCTOS", "IDPRODUCTO, PRODUCTO", "", "PRODUCTO");
@@ -302,11 +335,17 @@ namespace Inventory.Forms.Inventory.Sales
             CmbProduct.SelectedIndex = -1;
         }
 
+        // METODO Seed -> INFORMACION PARA CREAR UN EJEMPLO
         private void Seed()
         {
             TxtClient.Text = "JUAN CARLOS BODOQUE";
             TxtRTN.Text = "0401-2000-128859";
             CmbProduct.Text = "PRD000001";
+        }
+
+        private void WeightedValues()
+        {
+            //
         }
     }
 }
