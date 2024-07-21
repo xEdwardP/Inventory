@@ -21,7 +21,7 @@ namespace Inventory.Forms.Inventory.Sales
         Clases.Helpers Helpers = new Clases.Helpers();
 
         // Variables
-        private string code, client, rtn, product;
+        private string code, client, rtn, product, nfact;
 
         private string datetoday = DateTime.Today.ToShortDateString().ToString();
 
@@ -38,7 +38,6 @@ namespace Inventory.Forms.Inventory.Sales
         {
             Text = Clases.App.AppName + " | Ventas | ";
             StartForm();
-            InventoryManagement();
         }
 
         private void BtnNew_Click(object sender, EventArgs e)
@@ -52,12 +51,39 @@ namespace Inventory.Forms.Inventory.Sales
             TxtSearch.Enabled = false;
             BtnSearch.Enabled = false;
 
-            //Seed();
+            Seed();
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
+            ValidateData();
 
+            if (errors == 0)
+            {
+                SetValues();
+                InventoryManagement2(product,quantity);
+                if(errors == 0)
+                {
+                    string fields = "IDVENTA, NFACTV, CLIENTE, RTN, IDPRODUCTO, CANTIDAD";
+                    string values = "'" + code + "', '" + nfact + "', '" + client + "', '" + rtn + "', '" + product + "', " + quantity + "";
+
+                    if(Repository.Save("VENTAS", fields, values)> 0)
+                    {
+                        Helpers.MsgSuccess(Clases.Messages.MsgSave);
+                        Repository.SetLast(idmodule);
+                        //InventoryManagement(product, quantity);
+
+                        // SALDO
+                        string condition = "IDPRODUCTO='" + product + "'";
+                        int st = Convert.ToInt16(Repository.Hook("SALDOACTUAL", "PRODUCTOS", condition));
+                        st -= quantity;
+                        Repository.Update("PRODUCTOS", "SALDOACTUAL='" + st + "'", condition);
+                        
+                        Clean();
+                        StartForm();
+                    }
+                }
+            }
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -98,9 +124,11 @@ namespace Inventory.Forms.Inventory.Sales
         private void StartForm()
         {
             LblDate.Text = datetoday.ToString();
+            LblNFact.Text = "FAC000000";
             DgvData.Rows.Clear();
             StateButtons(true, false, false, false, true, true, true, true);
             StateControls(false);
+            GetProducts();
         }
 
         // Metodo StateButtons -> Habilita y deshabilita los botones
@@ -148,7 +176,7 @@ namespace Inventory.Forms.Inventory.Sales
         }
 
         // Metodo ValidateInfo -> Valida la informacion ingresada en los campos
-        private void ValidateInfo()
+        private void ValidateData()
         {
             errors = 0;
             
@@ -176,7 +204,7 @@ namespace Inventory.Forms.Inventory.Sales
                 return;
             }
 
-            if (TxtQuantity.Text.Trim().Length == 0 || Convert.ToDouble(TxtRTN.Text.Trim()) <= 0 )
+            if (TxtQuantity.Text.Trim().Length == 0 || Convert.ToDouble(TxtQuantity.Text.Trim()) <= 0 )
             {
                 Helpers.MsgWarning("INGRESE LA CANTIDAD!");
                 TxtQuantity.Focus();
@@ -188,94 +216,150 @@ namespace Inventory.Forms.Inventory.Sales
         // Metodo SetValues -> Almacenada la informacion de los campos en variables
         private void SetValues()
         {
+            nfact = LblNFact.Text;
             client = Helpers.CleanStr(TxtClient.Text.Trim());
             rtn = Helpers.CleanStr(TxtRTN.Text.Trim());
             product = CmbProduct.Text != "" ? CmbProduct.SelectedValue.ToString() : "";
             quantity = Convert.ToInt16(TxtQuantity.Text.Trim());
         }
 
-        private void InventoryManagement()
+        private void InventoryManagement(string producto, int cantidad)
         {
-            product = "PRD000001";
-            string condition = "IDPRODUCTO='" + product + "' AND ESTADO='DISPONIBLE'";
+            string condition = "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'";
             string firstreg = Repository.Harpoon("IDLOTE", "LOTES", "IDLOTE", condition, "first");
             int stockl1 = Convert.ToInt16(Repository.Hook("STOCK", "LOTES", "IDLOTE='" + firstreg + "'"));
-            // Helpers.MsgInfo(fistreg.ToString());
+            int currentbalance = Convert.ToInt32(Repository.Hook("SALDOACTUAL", "PRODUCTOS", "IDPRODUCTO='" + producto + "'"));
+            var lastreg = Repository.Harpoon("STOCK", "LOTES", "IDLOTE", "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'", "last");
 
-            int currentbalance = Convert.ToInt32(Repository.Hook("SALDOACTUAL", "PRODUCTOS", "IDPRODUCTO='" + product + "'"));
-
-            var lastreg = Repository.Harpoon("STOCK", "LOTES", "IDLOTE", "IDPRODUCTO='" + product + "' AND ESTADO='DISPONIBLE'", "last");
-            // Helpers.MsgInfo(lastreg.ToString());
-
-            if (currentbalance > quantity)
+            if (currentbalance > cantidad)
             {
                 if (RbPEPS.Checked == true)
                 {
-                    if (stockl1 > 0)
+                    DataTable data = Repository.Find("LOTES", "IDLOTE, PRECIO, STOCK", condition);
+                    if (data != null)
                     {
-                        DataTable data = Repository.Find("LOTES", "IDPRODUCTO, PRECIO, STOCK", condition);
-                        if (data != null)
+                        bool response = false;
+
+                        for (int i = 0; i < data.Rows.Count; i++)
                         {
-                            foreach (DataRow row in data.Rows)
+                            int _quantity = Convert.ToInt16(data.Rows[2][i]);
+
+                            if (cantidad == 0)
                             {
-                                if (Convert.ToInt16(row[0]) > quantity)
+                                response = true;
+                                break;
+                            }
+
+                            if (cantidad > _quantity)
+                            {
+                                cantidad -= _quantity;
+                                Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + data.Rows[0][i] + "'");
+                                Repository.Update("LOTES", "STOCK = 0", "IDLOTE='" + data.Rows[3][i] + "'");
+                            }
+                            else
+                            {
+                                _quantity -= cantidad;
+                                cantidad = 0;
+                                Repository.Update("LOTES", "STOCK=" + _quantity, "IDLOTE='" + data.Rows[3][i] + "'");
+                            }
+                        }
+                    }
+                }
+                else if (RbUEPS.Checked == true)
+                {
+                    // Implement UEPS logic
+                }
+                else if (RbAverageCost.Checked == true)
+                {
+                    // Implement average cost logic
+                }
+                else
+                {
+                    Helpers.MsgInfo("HA OCURRIDO UN ERROR AL INDICAR EL TIPO DE INVENTARIO.");
+                    errors++;
+                    return;
+                }
+            }
+            else
+            {
+                Helpers.MsgWarning($"NO HAY SUFICIENTE CANTIDAD EN STOCK, LA CANTIDAD EN STOCK ES {currentbalance}");
+                errors++;
+                return;
+            }
+        }
+
+        private void InventoryManagement2(string producto, int cantidad)
+        {
+            string condition = "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'";
+            //Primer Lote
+
+
+            string firstreg = Repository.Harpoon("IDLOTE", "LOTES", "IDLOTE", condition, "first");
+            int stockl1 = Convert.ToInt16(Repository.Hook("STOCK", "LOTES", "IDLOTE='" + firstreg + "'"));
+
+
+            int currentbalance = Convert.ToInt32(Repository.Hook("SALDOACTUAL", "PRODUCTOS", "IDPRODUCTO='" + producto + "'"));
+            var lastreg = Repository.Harpoon("STOCK", "LOTES", "IDLOTE", "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'", "last");
+
+            if (currentbalance >= cantidad)
+            {
+                if (RbPEPS.Checked == true)
+                {
+                    DataTable data = Repository.Find("LOTES", "IDLOTE, PRECIO, STOCK", condition);
+                    if (data.Rows.Count > 0)
+                    {
+                        if (stockl1 > 0 && stockl1 > cantidad)
+                        {
+                            stockl1 = stockl1 - cantidad;
+
+                            if (stockl1 == 0)
+                            {
+                                Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + firstreg + "'", "true");
+                                Repository.Update("LOTES", "STOCK=0", "IDLOTE='" + firstreg + "'", "true");
+                            }
+                            else
+                            {
+                                Repository.Update("LOTES", "STOCK='" + stockl1 + "'", "IDLOTE='" + firstreg + "'", "true");
+                            }
+                        }
+                        else
+                        {
+                            int _quantity;
+
+                            for (int i = 0; i < data.Rows.Count; i++)
+                            {
+                                //_quantity = data.Rows[2][i];
+                                _quantity = Convert.ToInt16(Helpers.ReturnsNumber(data.Rows[i][2].ToString()));
+                                
+                                if(cantidad == 0)
                                 {
-                                    int decrease = stockl1 - quantity;
-                                    if (Repository.Update("LOTES", "STOCK='" + stockl1 + "'", "IDLOTE='" + firstreg + "'") > 0)
-                                    {
-                                        //
-                                    }
-                                    if (stockl1 == 0)
-                                    {
-                                        if(Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + row[0] +"'", "true") > 0)
-                                        {
-                                            //
-                                        }
-                                    }
+                                    break;
+                                }
+
+                                else if (cantidad > _quantity)
+                                {
+                                    cantidad = cantidad - _quantity;
+                                    Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + data.Rows[i][0] + "'");
+                                    Repository.Update("LOTES", "STOCK=0", "IDLOTE='" + data.Rows[i][0] + "'");
                                 }
                                 else
                                 {
-                                    int diference = 0;
-
-                                    for(int i = 0; quantity > 0; i++)
+                                    _quantity = _quantity - cantidad;
+                                    cantidad = 0;
+                                    Repository.Update("LOTES", "STOCK=" + _quantity + "", "IDLOTE='" + data.Rows[i][0] + "'");
+                                    if (_quantity == 0)
                                     {
-                                       diference = quantity - Convert.ToInt16(data.Rows[1][i]);
+                                        Repository.Update("LOTES", "ESTADO='AGOTADO'", "IDLOTE='" + data.Rows[i][0] + "'", "true");
+                                        Repository.Update("LOTES", "STOCK=0", "IDLOTE='" + data.Rows[i][0] + "'", "true");
                                     }
                                 }
                             }
                         }
-                        
-
-
-
-                        //if (stockl1 > quantity)
-                        //{
-                        //    int decrease = stockl1 - quantity;
-                        //    if (Repository.Update("LOTES", "STOCK='" + stockl1 + "'", "IDLOTE='" + firstreg + "'") > 0)
-                        //    {
-                        //        //
-                        //    }
-                        //    else
-                        //    {
-                        //        DataTable data = Repository.Find("LOTES", "IDPRODUCTO, PRECIO, STOCK", condition);
-                        //        if (data != null)
-                        //        {
-                        //            foreach(DataRow dr in data.Rows)
-                        //            {
-                        //                if(stockl1 > quantity)
-                        //                {
-                        //                    int decrease = stockl1 - quantity;
-                        //                    if (Repository.Update("LOTES", "STOCK='" + stockl1 + "'", "IDLOTE='" + firstreg + "'") > 0)
-                        //                    {
-                        //                        //
-                        //                    }
-                        //                }
-                        //            }
-                        //        }
-                        //        int dif = quantity - stockl1;
-
-                        //    }
-                        //}
+                    }
+                    else
+                    {
+                        Helpers.MsgWarning("NO HAY UNIDADES DISPONIBLES DEL PRODUCTO SOLICITADO, CONTACTE AL PROVEEDOR!");
+                        return;
                     }
                 }
                 else if (RbUEPS.Checked == true)
@@ -288,14 +372,35 @@ namespace Inventory.Forms.Inventory.Sales
                 }
                 else
                 {
-                    //
+                    Helpers.MsgInfo("HA OCURRIDO UN ERROR AL INDICAR EL TIPO DE INVENTARIO!");
+                    errors++;
+                    return;
                 }
             }
             else
             {
                 Helpers.MsgWarning($"NO HAY SUFICIENTE CANTIDAD EN STOCK, LA CANTIDAD EN ESTOCK ES {currentbalance}");
+                errors++;
                 return;
             }
+        }
+
+
+
+        private void GetProducts()
+        {
+            DataTable data = Repository.Find("PRODUCTOS", "IDPRODUCTO, PRODUCTO", "", "PRODUCTO");
+            CmbProduct.DataSource = data;
+            CmbProduct.ValueMember = "IDPRODUCTO";
+            CmbProduct.DisplayMember = "PRODUCTO";
+            CmbProduct.SelectedIndex = -1;
+        }
+
+        private void Seed()
+        {
+            TxtClient.Text = "JUAN CARLOS BODOQUE";
+            TxtRTN.Text = "0401-2000-128859";
+            CmbProduct.Text = "PRD000001";
         }
     }
 }

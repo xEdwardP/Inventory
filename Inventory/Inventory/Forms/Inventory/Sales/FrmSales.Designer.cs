@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSales));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -321,8 +321,8 @@
             this.DgvData.AllowUserToDeleteRows = false;
             this.DgvData.AllowUserToResizeColumns = false;
             this.DgvData.AllowUserToResizeRows = false;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.AliceBlue;
-            this.DgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
+            this.DgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DCOIDLOTE,
@@ -431,12 +431,10 @@
             // RbAverageCost
             // 
             this.RbAverageCost.AutoSize = true;
-            this.RbAverageCost.Checked = true;
             this.RbAverageCost.Location = new System.Drawing.Point(101, 45);
             this.RbAverageCost.Name = "RbAverageCost";
             this.RbAverageCost.Size = new System.Drawing.Size(127, 20);
             this.RbAverageCost.TabIndex = 2;
-            this.RbAverageCost.TabStop = true;
             this.RbAverageCost.Text = "COSTO PROMEDIO";
             this.RbAverageCost.UseVisualStyleBackColor = true;
             // 
@@ -453,10 +451,12 @@
             // RbPEPS
             // 
             this.RbPEPS.AutoSize = true;
+            this.RbPEPS.Checked = true;
             this.RbPEPS.Location = new System.Drawing.Point(101, 19);
             this.RbPEPS.Name = "RbPEPS";
             this.RbPEPS.Size = new System.Drawing.Size(51, 20);
             this.RbPEPS.TabIndex = 0;
+            this.RbPEPS.TabStop = true;
             this.RbPEPS.Text = "PEPS";
             this.RbPEPS.UseVisualStyleBackColor = true;
             // 
