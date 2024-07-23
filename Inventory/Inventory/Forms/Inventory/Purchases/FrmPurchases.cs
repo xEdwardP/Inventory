@@ -37,7 +37,7 @@ namespace Inventory.Forms.Inventory.Purchases
         private void BtnNew_Click(object sender, EventArgs e)
         {
             Clean();
-            //AutoGenCode();
+            AutoGenCode();
             StateButtons(false, true, false, false, true, false, false);
             StateControls(true);
 
@@ -48,7 +48,24 @@ namespace Inventory.Forms.Inventory.Purchases
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
+            ValidateData();
 
+            if (errors == 0)
+            {
+                SetValues();
+                string fields = "IDCOMPRA, NFACTURAC, IDPRODUCTO, PRECIOCOMPRA, CANTPRODUCTO, IDPROVEEDOR, FECHACOMPRA";
+                string values = "'" + code + "', '" + nfact + "', '" + product + "', " + price + ", " + quantity + ", '" + provider + "', '" + datep + "'";
+
+                if (Repository.Save("COMPRAS", fields, values) > 0)
+                {
+                    Helpers.MsgSuccess(Messages.MsgSave);
+                    Repository.SetLast(idmodule);
+                    CreateLote(code);
+                    BalanceUpdate();
+                    Clean();
+                    StartForm();
+                }
+            }
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -215,6 +232,33 @@ namespace Inventory.Forms.Inventory.Purchases
         private void Seed()
         {
             //
+        }
+
+        private void CreateLote(string idpurchase)
+        {
+            // CODIGO LOTE
+            string idlote = "LOT" + Repository.GetNext(idmodule);
+
+            string fields = "IDLOTE, IDCOMPRA, IDPRODUCTO, PRECIO, STOCK";
+            string values = "'" + idlote + "', '" + idpurchase + "', '" + product + "', " + price + ", " + quantity + "";
+
+            if(Repository.Save("LOTES", fields, values) > 0)
+            {
+                Helpers.MsgSuccess("LOTES CREADOS EXITOSAMENTE!");
+                Repository.SetLast(idlote);
+            }
+        }
+
+        private void BalanceUpdate()
+        {
+            string condition = "IDPRODUCTO='" + product + "'";
+            int inventory = Convert.ToInt16(Repository.Hook("INVENTARIO", "PRODUCTOS", condition));
+            inventory += quantity;
+            Repository.Update("PRODUCTOS", "INVENTARIO=" + inventory + "", condition);
+
+            double sa = Convert.ToDouble(Repository.Hook("SALDOACTUAL", "PRODUCTOS", condition));
+            sa = sa + (quantity * price);
+            Repository.Update("PRODUCTOS", "SALDOACTUAL=" + sa + "", condition);
         }
     }
 }

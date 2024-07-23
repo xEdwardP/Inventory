@@ -210,7 +210,8 @@ namespace Inventory.Forms.Inventory.Sales
         private void CalcInventory(string producto, int cantidad, string orderby)
         {
             string condition = "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'";
-            int currentbalance = Convert.ToInt32(Repository.Hook("SALDOACTUAL", "PRODUCTOS", "IDPRODUCTO='" + producto + "'")); // SALDO ACTUAL
+            //int currentbalance = Convert.ToInt32(Repository.Hook("SALDOACTUAL", "PRODUCTOS", "IDPRODUCTO='" + producto + "'")); // SALDO ACTUAL
+            int currentbalance = Convert.ToInt32(Repository.Hook("INVENTARIO", "PRODUCTOS", "IDPRODUCTO='" + producto + "'")); // INVENTARIO ACTUAL
 
             if (currentbalance >= cantidad && cantidad > 0)
             {
