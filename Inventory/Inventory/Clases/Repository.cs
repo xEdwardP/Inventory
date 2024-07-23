@@ -610,5 +610,86 @@ namespace Inventory.Clases
             return target;
         }
         //fin metodo GetLastRegister
+
+        //Metodo GetSumField, utilizado para traer la suma de un campo
+        public string GetSumField(string Campo, string tabla, string Condicion)
+        {
+            string Sum = "";
+            try
+            {
+                string Query = "SELECT SUM(" + Campo + ") AS Result FROM " + tabla + " " + " WHERE " + Condicion;
+                com = new SqlCommand(Query, Clases.Conexion.ConSql);
+                SqlDataReader Recordset;
+                Clases.Conexion.OpenConnection();
+                Recordset = com.ExecuteReader();
+
+                if (Recordset.Read())
+                {
+                    Sum = Recordset["Result"].ToString();
+                }
+                else
+                {
+                    MessageBox.Show("ERROR AL PROCESAR LOS DATOS!", "ATENCIÓN", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+
+                Recordset.Close();
+                com.Dispose();
+                Clases.Conexion.CloseConnection();
+            }
+            catch (SqlException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+            finally
+            {
+                Clases.Conexion.EndsConnection();
+            }
+            return Sum;
+
+        }
+        //fin metodo GetSumField
+
+        //Metodo GetNumRows
+        //Determina el numero de filas que cumplen una condicion
+        public Int16 GetNumRows(string tablename, string condition = "")
+        {
+            Int16 NumRows = 0;
+            if (condition == "")
+            {
+                query = "SELECT COUNT(*) AS NUMROWS FROM " + tablename;
+            }
+            else
+            {
+                query = "SELECT COUNT(*) AS NUMROWS FROM " + tablename + " WHERE " + condition;
+            }
+            try
+            {
+                com = new SqlCommand(query, Clases.Conexion.ConSql);
+                Clases.Conexion.OpenConnection();
+                reader = com.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    NumRows = Convert.ToInt16(reader["NUMROWS"].ToString());
+                }
+                else
+                {
+                    MessageBox.Show("ERROR FATAL AL PROCESAR EL COMANDO ESPECIFICADO");
+                }
+                reader.Close();
+                com.Dispose();
+                Clases.Conexion.CloseConnection();
+            }
+            catch (SqlException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+            finally
+            {
+                Clases.Conexion.EndsConnection();
+            }
+            return NumRows;
+        }
+        //Fin GetNumRows
     }
 }

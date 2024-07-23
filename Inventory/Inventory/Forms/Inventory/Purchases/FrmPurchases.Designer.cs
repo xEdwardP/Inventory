@@ -49,8 +49,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.TxtQuantity = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.DtpDate = new System.Windows.Forms.DateTimePicker();
             this.TxtPrice = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -64,6 +62,8 @@
             this.DCCANTIDAD = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCFECHA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BtnSearch = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.DtpDate = new System.Windows.Forms.DateTimePicker();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvData)).BeginInit();
             this.SuspendLayout();
@@ -95,6 +95,7 @@
             this.BtnNew.Name = "BtnNew";
             this.BtnNew.Size = new System.Drawing.Size(76, 28);
             this.BtnNew.Text = "NUEVO";
+            this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
             // 
             // toolStripSeparator1
             // 
@@ -110,6 +111,7 @@
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(94, 28);
             this.BtnSave.Text = "GUARDAR";
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // toolStripSeparator2
             // 
@@ -125,6 +127,7 @@
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(94, 28);
             this.BtnCancel.Text = "CANCELAR";
+            this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // toolStripSeparator4
             // 
@@ -140,6 +143,7 @@
             this.BtnDelete.Name = "BtnDelete";
             this.BtnDelete.Size = new System.Drawing.Size(91, 28);
             this.BtnDelete.Text = "ELIMINAR";
+            this.BtnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // toolStripSeparator5
             // 
@@ -156,6 +160,7 @@
             this.BtnClose.Name = "BtnClose";
             this.BtnClose.Size = new System.Drawing.Size(68, 28);
             this.BtnClose.Text = "SALIR";
+            this.BtnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
             // label1
             // 
@@ -230,6 +235,7 @@
             this.TxtQuantity.Name = "TxtQuantity";
             this.TxtQuantity.Size = new System.Drawing.Size(151, 27);
             this.TxtQuantity.TabIndex = 57;
+            this.TxtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtQuantity_KeyPress);
             // 
             // label6
             // 
@@ -241,30 +247,13 @@
             this.label6.TabIndex = 56;
             this.label6.Text = "CANTIDAD:";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(426, 142);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(60, 19);
-            this.label7.TabIndex = 58;
-            this.label7.Text = "FECHA:";
-            // 
-            // DtpDate
-            // 
-            this.DtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.DtpDate.Location = new System.Drawing.Point(497, 139);
-            this.DtpDate.Name = "DtpDate";
-            this.DtpDate.Size = new System.Drawing.Size(152, 27);
-            this.DtpDate.TabIndex = 59;
-            // 
             // TxtPrice
             // 
             this.TxtPrice.Location = new System.Drawing.Point(497, 106);
             this.TxtPrice.Name = "TxtPrice";
             this.TxtPrice.Size = new System.Drawing.Size(152, 27);
             this.TxtPrice.TabIndex = 61;
+            this.TxtPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPrice_KeyPress);
             // 
             // label9
             // 
@@ -376,6 +365,25 @@
             this.BtnSearch.TabIndex = 70;
             this.BtnSearch.Text = "+";
             this.BtnSearch.UseVisualStyleBackColor = true;
+            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(426, 142);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(60, 19);
+            this.label7.TabIndex = 58;
+            this.label7.Text = "FECHA:";
+            // 
+            // DtpDate
+            // 
+            this.DtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.DtpDate.Location = new System.Drawing.Point(497, 139);
+            this.DtpDate.Name = "DtpDate";
+            this.DtpDate.Size = new System.Drawing.Size(152, 27);
+            this.DtpDate.TabIndex = 59;
             // 
             // FrmPurchases
             // 
@@ -440,8 +448,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox TxtQuantity;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DateTimePicker DtpDate;
         private System.Windows.Forms.TextBox TxtPrice;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
@@ -455,5 +461,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DCCANTIDAD;
         private System.Windows.Forms.DataGridViewTextBoxColumn DCFECHA;
         private System.Windows.Forms.Button BtnSearch;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DateTimePicker DtpDate;
     }
 }

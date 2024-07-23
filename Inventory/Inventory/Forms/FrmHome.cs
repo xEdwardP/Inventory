@@ -47,5 +47,10 @@ namespace Inventory.Forms
             movements.MdiParent = this;
             movements.Show();
         }
+
+        private void FrmHome_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

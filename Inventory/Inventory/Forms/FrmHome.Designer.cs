@@ -32,18 +32,18 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnExit = new System.Windows.Forms.ToolStripButton();
+            this.BtnPurchases = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnSales = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnMovements = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.SstPrincipal = new System.Windows.Forms.StatusStrip();
             this.LblUser = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.LblFecha = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.LblBd = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.BtnPurchases = new System.Windows.Forms.ToolStripButton();
-            this.BtnSales = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.SstPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -83,6 +83,40 @@
             this.BtnExit.Text = "SALIR";
             this.BtnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
+            // BtnPurchases
+            // 
+            this.BtnPurchases.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnPurchases.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.BtnPurchases.Image = ((System.Drawing.Image)(resources.GetObject("BtnPurchases.Image")));
+            this.BtnPurchases.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.BtnPurchases.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnPurchases.Name = "BtnPurchases";
+            this.BtnPurchases.Size = new System.Drawing.Size(92, 28);
+            this.BtnPurchases.Text = "COMPRAS";
+            this.BtnPurchases.Click += new System.EventHandler(this.BtnPurchases_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // BtnSales
+            // 
+            this.BtnSales.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSales.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.BtnSales.Image = ((System.Drawing.Image)(resources.GetObject("BtnSales.Image")));
+            this.BtnSales.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.BtnSales.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnSales.Name = "BtnSales";
+            this.BtnSales.Size = new System.Drawing.Size(80, 28);
+            this.BtnSales.Text = "VENTAS";
+            this.BtnSales.Click += new System.EventHandler(this.BtnSales_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 31);
+            // 
             // BtnMovements
             // 
             this.BtnMovements.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -94,6 +128,11 @@
             this.BtnMovements.Size = new System.Drawing.Size(120, 28);
             this.BtnMovements.Text = "MOVIMIENTOS";
             this.BtnMovements.Click += new System.EventHandler(this.BtnMovements_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
             // 
             // SstPrincipal
             // 
@@ -146,45 +185,6 @@
             this.LblBd.Size = new System.Drawing.Size(38, 32);
             this.LblBd.Text = "---";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
-            // 
-            // BtnPurchases
-            // 
-            this.BtnPurchases.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnPurchases.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.BtnPurchases.Image = ((System.Drawing.Image)(resources.GetObject("BtnPurchases.Image")));
-            this.BtnPurchases.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.BtnPurchases.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnPurchases.Name = "BtnPurchases";
-            this.BtnPurchases.Size = new System.Drawing.Size(92, 28);
-            this.BtnPurchases.Text = "COMPRAS";
-            this.BtnPurchases.Click += new System.EventHandler(this.BtnPurchases_Click);
-            // 
-            // BtnSales
-            // 
-            this.BtnSales.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSales.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.BtnSales.Image = ((System.Drawing.Image)(resources.GetObject("BtnSales.Image")));
-            this.BtnSales.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.BtnSales.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnSales.Name = "BtnSales";
-            this.BtnSales.Size = new System.Drawing.Size(80, 28);
-            this.BtnSales.Text = "VENTAS";
-            this.BtnSales.Click += new System.EventHandler(this.BtnSales_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 31);
-            // 
             // FrmHome
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -204,6 +204,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "---";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmHome_FormClosed);
             this.Load += new System.EventHandler(this.FrmHome_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
