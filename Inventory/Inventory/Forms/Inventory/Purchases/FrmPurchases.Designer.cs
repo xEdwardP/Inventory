@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPurchases));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -55,15 +55,15 @@
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.DgvData = new System.Windows.Forms.DataGridView();
-            this.DCOIDLOTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DCPRODUCTO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DCPROVEEDOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DCVALOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DCCANTIDAD = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DCFECHA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BtnSearch = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.DtpDate = new System.Windows.Forms.DateTimePicker();
+            this.DCOIDLOTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DCPRODUCTO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DCVALOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DCCANTIDAD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DCPROVIDER = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DCFECHA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvData)).BeginInit();
             this.SuspendLayout();
@@ -300,15 +300,15 @@
             this.DgvData.AllowUserToDeleteRows = false;
             this.DgvData.AllowUserToResizeColumns = false;
             this.DgvData.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.AliceBlue;
-            this.DgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
+            this.DgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DCOIDLOTE,
             this.DCPRODUCTO,
-            this.DCPROVEEDOR,
             this.DCVALOR,
             this.DCCANTIDAD,
+            this.DCPROVIDER,
             this.DCFECHA});
             this.DgvData.Location = new System.Drawing.Point(16, 229);
             this.DgvData.Name = "DgvData";
@@ -317,45 +317,6 @@
             this.DgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvData.Size = new System.Drawing.Size(888, 192);
             this.DgvData.TabIndex = 69;
-            // 
-            // DCOIDLOTE
-            // 
-            this.DCOIDLOTE.HeaderText = "ID";
-            this.DCOIDLOTE.Name = "DCOIDLOTE";
-            this.DCOIDLOTE.ReadOnly = true;
-            // 
-            // DCPRODUCTO
-            // 
-            this.DCPRODUCTO.HeaderText = "PRODUCTO";
-            this.DCPRODUCTO.Name = "DCPRODUCTO";
-            this.DCPRODUCTO.ReadOnly = true;
-            this.DCPRODUCTO.Width = 220;
-            // 
-            // DCPROVEEDOR
-            // 
-            this.DCPROVEEDOR.HeaderText = "PROVEEDOR";
-            this.DCPROVEEDOR.Name = "DCPROVEEDOR";
-            this.DCPROVEEDOR.ReadOnly = true;
-            this.DCPROVEEDOR.Width = 200;
-            // 
-            // DCVALOR
-            // 
-            this.DCVALOR.HeaderText = "VALOR UNT";
-            this.DCVALOR.Name = "DCVALOR";
-            this.DCVALOR.ReadOnly = true;
-            this.DCVALOR.Width = 150;
-            // 
-            // DCCANTIDAD
-            // 
-            this.DCCANTIDAD.HeaderText = "CANTIDAD";
-            this.DCCANTIDAD.Name = "DCCANTIDAD";
-            this.DCCANTIDAD.ReadOnly = true;
-            // 
-            // DCFECHA
-            // 
-            this.DCFECHA.HeaderText = "FECHA";
-            this.DCFECHA.Name = "DCFECHA";
-            this.DCFECHA.ReadOnly = true;
             // 
             // BtnSearch
             // 
@@ -384,6 +345,46 @@
             this.DtpDate.Name = "DtpDate";
             this.DtpDate.Size = new System.Drawing.Size(152, 27);
             this.DtpDate.TabIndex = 59;
+            // 
+            // DCOIDLOTE
+            // 
+            this.DCOIDLOTE.HeaderText = "ID";
+            this.DCOIDLOTE.Name = "DCOIDLOTE";
+            this.DCOIDLOTE.ReadOnly = true;
+            // 
+            // DCPRODUCTO
+            // 
+            this.DCPRODUCTO.HeaderText = "PRODUCTO";
+            this.DCPRODUCTO.Name = "DCPRODUCTO";
+            this.DCPRODUCTO.ReadOnly = true;
+            this.DCPRODUCTO.Width = 220;
+            // 
+            // DCVALOR
+            // 
+            this.DCVALOR.HeaderText = "VALOR UNT";
+            this.DCVALOR.Name = "DCVALOR";
+            this.DCVALOR.ReadOnly = true;
+            this.DCVALOR.Width = 150;
+            // 
+            // DCCANTIDAD
+            // 
+            this.DCCANTIDAD.HeaderText = "CANTIDAD";
+            this.DCCANTIDAD.Name = "DCCANTIDAD";
+            this.DCCANTIDAD.ReadOnly = true;
+            // 
+            // DCPROVIDER
+            // 
+            this.DCPROVIDER.HeaderText = "PROVEEDOR";
+            this.DCPROVIDER.Name = "DCPROVIDER";
+            this.DCPROVIDER.ReadOnly = true;
+            this.DCPROVIDER.Width = 150;
+            // 
+            // DCFECHA
+            // 
+            this.DCFECHA.HeaderText = "FECHA";
+            this.DCFECHA.Name = "DCFECHA";
+            this.DCFECHA.ReadOnly = true;
+            this.DCFECHA.Width = 150;
             // 
             // FrmPurchases
             // 
@@ -454,14 +455,14 @@
         private System.Windows.Forms.TextBox TxtSearch;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.DataGridView DgvData;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DCOIDLOTE;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DCPRODUCTO;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DCPROVEEDOR;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DCVALOR;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DCCANTIDAD;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DCFECHA;
         private System.Windows.Forms.Button BtnSearch;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DateTimePicker DtpDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DCOIDLOTE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DCPRODUCTO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DCVALOR;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DCCANTIDAD;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DCPROVIDER;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DCFECHA;
     }
 }

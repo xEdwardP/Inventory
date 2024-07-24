@@ -89,7 +89,8 @@ namespace Inventory.Forms.Inventory.Purchases
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-
+            string search = Helpers.CleanStr(TxtSearch.Text.Trim());
+            GetPurchases(search);
         }
 
         private void Clean()
@@ -259,6 +260,48 @@ namespace Inventory.Forms.Inventory.Purchases
             double sa = Convert.ToDouble(Repository.Hook("SALDOACTUAL", "PRODUCTOS", condition));
             sa = sa + (quantity * price);
             Repository.Update("PRODUCTOS", "SALDOACTUAL=" + sa + "", condition);
+        }
+
+        private void GetPurchases(string search = "")
+        {
+            string condition = "";
+            string query = "A.IDCOMPRA, B.PRODUCTO, A.PRECIOCOMPRA, A.CANTPRODUCTO, C.IDPROVEEDOR, A.FECHACOMPRA FROM COMPRAS A INNER JOIN PRODUCTOS B ON (A.IDPRODUCTO = B.IDPRODUCTO) INNER JOIN PROVEEDORES C ON (A.IDPROVEEDOR = C.IDPROVEEDOR)";
+
+            DataTable data = new DataTable();
+
+            if(search != "")
+            {
+                condition = "B.PRODUCTO LIKE '%" + search + "%'";
+                data = Repository.JoinTables(query, condition);
+            }
+            else
+            {
+                data = Repository.JoinTables(query);
+            }
+            DgvData.Rows.Clear();
+
+            string _idpurchase, _product, _provider, _datep;
+            double _price, _quantity;
+
+            if (data.Rows.Count > 0)
+            {
+                for (int i = 0; i < data.Rows.Count; i++)
+                {
+                    _idpurchase = data.Rows[i][0].ToString();
+                    _product = data.Rows[i][1].ToString();
+                    _price = Helpers.ReturnsNumber(data.Rows[i][2].ToString());
+                    _quantity = Helpers.ReturnsNumber(data.Rows[i][3].ToString());
+                    _provider = data.Rows[i][4].ToString();
+                    _datep = data.Rows[i][5].ToString();
+
+                    DgvData.Rows.Add(_idpurchase, _product, _price.ToString("N2"), _quantity, _provider, _datep);
+                }
+                data.Dispose();
+            }
+            else
+            {
+                Helpers.MsgWarning(Clases.Messages.MsgNotFound);
+            }
         }
     }
 }

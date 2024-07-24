@@ -92,7 +92,8 @@ namespace Inventory.Forms.Inventory.Sales
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            //
+            string search = Helpers.CleanStr(TxtSearch.Text.Trim());
+            GetSales(search);
         }
 
         private void TxtQuantity_KeyPress(object sender, KeyPressEventArgs e)
@@ -124,6 +125,8 @@ namespace Inventory.Forms.Inventory.Sales
             BtnDelete.Enabled = stdelete;
             BtnCancel.Enabled = stcancel;
             BtnClose.Enabled = stexit;
+
+            TxtSearch.Enabled = stsearch;
             BtnSearch.Enabled = stsearch;
 
             RbPEPS.Enabled = inventory;
@@ -317,7 +320,7 @@ namespace Inventory.Forms.Inventory.Sales
             }
             else if (RbAverageCost.Checked == true)
             {
-                //
+                promedios(product, quantity);
             }
             else
             {
@@ -347,6 +350,83 @@ namespace Inventory.Forms.Inventory.Sales
         private void WeightedValues()
         {
             //
+        }
+
+        private void promedios(string prod, double quant)
+        {
+            // string idpurchase = "PROMEDIO";
+            // string idpurchase = "CPR" + Repository.GetNext("CPR");
+            string condition = "ESTADO='DISPONIBLE'";
+            // double cantbd = Convert.ToDouble(Repository.GetSumField("STOCK", "LOTES", condition));
+            double nlotes = Convert.ToDouble(Repository.GetNumRows("LOTES", condition));
+            double sumpricebd = Convert.ToDouble(Repository.GetSumField("PRECIO", "LOTES", condition));
+
+            double averageprice = sumpricebd / nlotes;
+
+            double total = averageprice * quant;
+
+            double inventory = Convert.ToDouble(Repository.Hook("INVENTARIO", "PRODUCTOS", "IDPRODUCTO='" + product + "'"));
+
+            inventory -= quantity;
+
+            if(Repository.Update("PRODUCTOS", "INVENTARIO="+inventory+"", "IDPRODUCTO='" + product + "'") > 0)
+            {
+                Helpers.MsgSuccess("SE RESTARON UNIDADES DE INVENTARIO!");
+            }
+
+            // GUARDANDO LA VENTA
+            AutoGenCode();
+            string fields = "IDVENTA, NFACTV, CLIENTE, RTN, IDPRODUCTO, CANTIDAD, TOTAL";
+            string values = "'" + code + "', '" + nfact + "', '" + client + "', '" + rtn + "', '" + product + "', " + quant + ", " + total + "";
+            if (Repository.Save("VENTAS", fields, values) > 0)
+            {
+                Repository.SetLast(idmodule);
+                Helpers.MsgSuccess("LA VENTA SE REGISTRO EXITOSAMENTE!");
+            }
+        }
+
+        private void GetSales(string search = "")
+        {
+            string condition = "";
+            string query = "A.IDVENTA, A.NFACTV, A.CLIENTE, B.PRODUCTO, A.CANTIDAD, A.TOTAL, A.IDLOTE, A.FECHAVENTA FROM VENTAS A INNER JOIN PRODUCTOS B ON (A.IDPRODUCTO=B.IDPRODUCTO)";
+
+            DataTable data = new DataTable();
+            
+            if(search != "")
+            {
+                data = Repository.JoinTables(query, condition);
+            }
+            else
+            {
+                data = Repository.JoinTables(query);
+            }
+
+            DgvData.Rows.Clear();
+
+            string _idventa, _nfactv, _client, _product, _idlote, _datev;
+            double _quantity, _total;
+
+            if(data.Rows.Count > 0)
+            {
+                for (int i = 0; i < data.Rows.Count; i++)
+                {
+                    _idventa = data.Rows[i][0].ToString();
+                    _nfactv = data.Rows[i][1].ToString();
+                    _client = data.Rows[i][2].ToString();
+                    _product = data.Rows[i][3].ToString();
+                    _quantity = Helpers.ReturnsNumber(data.Rows[i][4].ToString());
+                    _total = Helpers.ReturnsNumber(data.Rows[i][5].ToString());
+                    _idlote = data.Rows[i][6].ToString();
+                    _datev = data.Rows[i][7].ToString();
+
+                    DgvData.Rows.Add(_idventa, _nfactv, _client, _product, _quantity, _total, _idlote, _datev);
+                }
+                data.Dispose();
+            }
+            else
+            {
+                Helpers.MsgWarning(Clases.Messages.MsgNotFound);
+            }
         }
     }
 }
