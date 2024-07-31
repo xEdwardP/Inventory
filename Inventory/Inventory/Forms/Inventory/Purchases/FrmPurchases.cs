@@ -122,6 +122,8 @@ namespace Inventory.Forms.Inventory.Purchases
             BtnDelete.Enabled = stdelete;
             BtnCancel.Enabled = stcancel;
             BtnClose.Enabled = stexit;
+
+            TxtSearch.Enabled = stsearch;
             BtnSearch.Enabled = stsearch;
         }
 
@@ -167,7 +169,7 @@ namespace Inventory.Forms.Inventory.Purchases
 
             if(CmbProduct.Text == "")
             {
-                Helpers.MsgWarning("SELECCION EK PRODUCTO!");
+                Helpers.MsgWarning("SELECCIONE EL PRODUCTO!");
                 CmbProduct.Focus();
                 errors++;
                 return;
@@ -219,6 +221,13 @@ namespace Inventory.Forms.Inventory.Purchases
             CmbProduct.SelectedIndex = -1;
         }
 
+        private void BtnManageLotes_Click(object sender, EventArgs e)
+        {
+            var managelotes = new Forms.Inventory.Purchases.FrmLote();
+            AddOwnedForm(managelotes);
+            managelotes.Show();
+        }
+
         // METODO GetProviders -> TRAE LOS PROVEEDORES
         private void GetProviders()
         {
@@ -238,7 +247,7 @@ namespace Inventory.Forms.Inventory.Purchases
         private void CreateLote(string idpurchase)
         {
             // CODIGO LOTE
-            string idlote = "LOT" + Repository.GetNext(idmodule);
+            string idlote = "LOT" + Repository.GetNext("LOT");
 
             string fields = "IDLOTE, IDCOMPRA, IDPRODUCTO, PRECIO, STOCK";
             string values = "'" + idlote + "', '" + idpurchase + "', '" + product + "', " + price + ", " + quantity + "";
@@ -246,7 +255,7 @@ namespace Inventory.Forms.Inventory.Purchases
             if(Repository.Save("LOTES", fields, values) > 0)
             {
                 Helpers.MsgSuccess("LOTES CREADOS EXITOSAMENTE!");
-                Repository.SetLast(idlote);
+                Repository.SetLast("LOT");
             }
         }
 

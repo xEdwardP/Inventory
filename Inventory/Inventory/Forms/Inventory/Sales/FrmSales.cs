@@ -57,16 +57,16 @@ namespace Inventory.Forms.Inventory.Sales
 
                 if (errors == 0)
                 {
-                    Helpers.MsgSuccess(Clases.Messages.MsgSave);
-
                     // SALDO
                     string condition = "IDPRODUCTO='" + product + "'";
-                    int st = Convert.ToInt16(Repository.Hook("SALDOACTUAL", "PRODUCTOS", condition));
+                    int st = Convert.ToInt16(Repository.Hook("INVENTARIO", "PRODUCTOS", condition));
                     st -= quantity;
-                    Repository.Update("PRODUCTOS", "SALDOACTUAL='" + st + "'", condition);
-
-                    Clean();
-                    StartForm();
+                    if (Repository.Update("PRODUCTOS", "SALDOACTUAL='" + st + "'", condition) > 0)
+                    {
+                        Helpers.MsgSuccess(Clases.Messages.MsgSave);
+                        Clean();
+                        StartForm();
+                    }
                 }
             }
         }
@@ -213,7 +213,6 @@ namespace Inventory.Forms.Inventory.Sales
         private void CalcInventory(string producto, int cantidad, string orderby)
         {
             string condition = "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'";
-            //int currentbalance = Convert.ToInt32(Repository.Hook("SALDOACTUAL", "PRODUCTOS", "IDPRODUCTO='" + producto + "'")); // SALDO ACTUAL
             int currentbalance = Convert.ToInt32(Repository.Hook("INVENTARIO", "PRODUCTOS", "IDPRODUCTO='" + producto + "'")); // INVENTARIO ACTUAL
 
             if (currentbalance >= cantidad && cantidad > 0)
@@ -243,6 +242,9 @@ namespace Inventory.Forms.Inventory.Sales
                             cant = Convert.ToDouble(_quantity); // CANTIDAD VENDIDA DEL LOTE
                             total = cant * price;
 
+                            //p
+                            CalcBalance(producto, total);
+
                             // RESTANDO LA CANTIDAD SOLICITADA - LA CANTIDAD DISPONIBLE EN EL LOTE
                             cantidad = cantidad - _quantity;
 
@@ -271,6 +273,9 @@ namespace Inventory.Forms.Inventory.Sales
 
                             // ACTUALIZANDO EL STOCK
                             Repository.Update("LOTES", "STOCK=" + _quantity + "", "IDLOTE='" + data.Rows[i][0] + "'");
+                            
+                            // P
+                            CalcBalance(producto, total);
 
                             // GUARDANDO LA VENTA
                             AutoGenCode();
@@ -320,7 +325,7 @@ namespace Inventory.Forms.Inventory.Sales
             }
             else if (RbAverageCost.Checked == true)
             {
-                promedios(product, quantity);
+                WeightedValues(product, quantity);
             }
             else
             {
@@ -347,17 +352,9 @@ namespace Inventory.Forms.Inventory.Sales
             CmbProduct.Text = "PRD000001";
         }
 
-        private void WeightedValues()
+        private void WeightedValues(string prod, double quant)
         {
-            //
-        }
-
-        private void promedios(string prod, double quant)
-        {
-            // string idpurchase = "PROMEDIO";
-            // string idpurchase = "CPR" + Repository.GetNext("CPR");
             string condition = "ESTADO='DISPONIBLE'";
-            // double cantbd = Convert.ToDouble(Repository.GetSumField("STOCK", "LOTES", condition));
             double nlotes = Convert.ToDouble(Repository.GetNumRows("LOTES", condition));
             double sumpricebd = Convert.ToDouble(Repository.GetSumField("PRECIO", "LOTES", condition));
 
@@ -369,7 +366,7 @@ namespace Inventory.Forms.Inventory.Sales
 
             inventory -= quantity;
 
-            if(Repository.Update("PRODUCTOS", "INVENTARIO="+inventory+"", "IDPRODUCTO='" + product + "'") > 0)
+            if (Repository.Update("PRODUCTOS", "INVENTARIO=" + inventory + "", "IDPRODUCTO='" + product + "'") > 0)
             {
                 Helpers.MsgSuccess("SE RESTARON UNIDADES DE INVENTARIO!");
             }
@@ -426,6 +423,19 @@ namespace Inventory.Forms.Inventory.Sales
             else
             {
                 Helpers.MsgWarning(Clases.Messages.MsgNotFound);
+            }
+        }
+
+        private void CalcBalance(string productsale, double totalsale)
+        {
+            string condition = "IDPRODUCTO='" + productsale + "'";
+            double balance = Convert.ToDouble(Repository.Hook("SALDOACTUAL", "PRODUCTOS", condition));
+
+            balance = balance - totalsale;
+
+            if (Repository.Update("PRODUCTOS", "SALDOACTUAL=" + balance + "", condition) > 0)
+            {
+                Helpers.MsgSuccess("EL SALDO SE HA ACTUALIZADO!");
             }
         }
     }

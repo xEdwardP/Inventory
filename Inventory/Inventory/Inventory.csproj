@@ -75,6 +75,12 @@
     <Compile Include="Forms\Inventory\Movements\FrmMovements.Designer.cs">
       <DependentUpon>FrmMovements.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Inventory\Purchases\FrmLote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Inventory\Purchases\FrmLote.Designer.cs">
+      <DependentUpon>FrmLote.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Inventory\Purchases\FrmPurchases.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Inventory\Movements\FrmMovements.resx">
       <DependentUpon>FrmMovements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Inventory\Purchases\FrmLote.resx">
+      <DependentUpon>FrmLote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Inventory\Purchases\FrmPurchases.resx">
       <DependentUpon>FrmPurchases.cs</DependentUpon>

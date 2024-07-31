@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPurchases));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -55,15 +55,16 @@
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.DgvData = new System.Windows.Forms.DataGridView();
-            this.BtnSearch = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.DtpDate = new System.Windows.Forms.DateTimePicker();
             this.DCOIDLOTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCPRODUCTO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCVALOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCCANTIDAD = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCPROVIDER = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCFECHA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BtnSearch = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.DtpDate = new System.Windows.Forms.DateTimePicker();
+            this.BtnManageLotes = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvData)).BeginInit();
             this.SuspendLayout();
@@ -300,8 +301,8 @@
             this.DgvData.AllowUserToDeleteRows = false;
             this.DgvData.AllowUserToResizeColumns = false;
             this.DgvData.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
-            this.DgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.AliceBlue;
+            this.DgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.DgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DCOIDLOTE,
@@ -317,34 +318,6 @@
             this.DgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvData.Size = new System.Drawing.Size(888, 192);
             this.DgvData.TabIndex = 69;
-            // 
-            // BtnSearch
-            // 
-            this.BtnSearch.Location = new System.Drawing.Point(877, 187);
-            this.BtnSearch.Name = "BtnSearch";
-            this.BtnSearch.Size = new System.Drawing.Size(27, 27);
-            this.BtnSearch.TabIndex = 70;
-            this.BtnSearch.Text = "+";
-            this.BtnSearch.UseVisualStyleBackColor = true;
-            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(426, 142);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(60, 19);
-            this.label7.TabIndex = 58;
-            this.label7.Text = "FECHA:";
-            // 
-            // DtpDate
-            // 
-            this.DtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.DtpDate.Location = new System.Drawing.Point(497, 139);
-            this.DtpDate.Name = "DtpDate";
-            this.DtpDate.Size = new System.Drawing.Size(152, 27);
-            this.DtpDate.TabIndex = 59;
             // 
             // DCOIDLOTE
             // 
@@ -386,12 +359,52 @@
             this.DCFECHA.ReadOnly = true;
             this.DCFECHA.Width = 150;
             // 
+            // BtnSearch
+            // 
+            this.BtnSearch.Location = new System.Drawing.Point(877, 187);
+            this.BtnSearch.Name = "BtnSearch";
+            this.BtnSearch.Size = new System.Drawing.Size(27, 27);
+            this.BtnSearch.TabIndex = 70;
+            this.BtnSearch.Text = "+";
+            this.BtnSearch.UseVisualStyleBackColor = true;
+            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(426, 142);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(60, 19);
+            this.label7.TabIndex = 58;
+            this.label7.Text = "FECHA:";
+            // 
+            // DtpDate
+            // 
+            this.DtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.DtpDate.Location = new System.Drawing.Point(497, 139);
+            this.DtpDate.Name = "DtpDate";
+            this.DtpDate.Size = new System.Drawing.Size(152, 27);
+            this.DtpDate.TabIndex = 59;
+            // 
+            // BtnManageLotes
+            // 
+            this.BtnManageLotes.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnManageLotes.Location = new System.Drawing.Point(16, 427);
+            this.BtnManageLotes.Name = "BtnManageLotes";
+            this.BtnManageLotes.Size = new System.Drawing.Size(198, 27);
+            this.BtnManageLotes.TabIndex = 71;
+            this.BtnManageLotes.Text = "GESTIONAR LOTES";
+            this.BtnManageLotes.UseVisualStyleBackColor = true;
+            this.BtnManageLotes.Click += new System.EventHandler(this.BtnManageLotes_Click);
+            // 
             // FrmPurchases
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.AliceBlue;
-            this.ClientSize = new System.Drawing.Size(918, 433);
+            this.ClientSize = new System.Drawing.Size(918, 468);
             this.ControlBox = false;
+            this.Controls.Add(this.BtnManageLotes);
             this.Controls.Add(this.BtnSearch);
             this.Controls.Add(this.DgvData);
             this.Controls.Add(this.TxtSearch);
@@ -464,5 +477,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DCCANTIDAD;
         private System.Windows.Forms.DataGridViewTextBoxColumn DCPROVIDER;
         private System.Windows.Forms.DataGridViewTextBoxColumn DCFECHA;
+        private System.Windows.Forms.Button BtnManageLotes;
     }
 }
