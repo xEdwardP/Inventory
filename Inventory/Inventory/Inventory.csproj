@@ -155,6 +155,7 @@
     <Content Include="Icons\borrar-24px.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Icons\box_24px.png" />
     <Content Include="Icons\buscar-24px.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
