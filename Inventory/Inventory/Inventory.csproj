@@ -194,6 +194,7 @@
     <Content Include="Icons\icono_login.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Icons\lotes_16px.png" />
     <Content Include="Icons\movements_24px.png" />
     <Content Include="Icons\nuevo-24px.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

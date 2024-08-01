@@ -144,6 +144,7 @@
             this.BtnDelete.Name = "BtnDelete";
             this.BtnDelete.Size = new System.Drawing.Size(91, 28);
             this.BtnDelete.Text = "ELIMINAR";
+            this.BtnDelete.Visible = false;
             this.BtnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // toolStripSeparator5
@@ -361,11 +362,11 @@
             // 
             // BtnSearch
             // 
+            this.BtnSearch.Image = ((System.Drawing.Image)(resources.GetObject("BtnSearch.Image")));
             this.BtnSearch.Location = new System.Drawing.Point(877, 187);
             this.BtnSearch.Name = "BtnSearch";
             this.BtnSearch.Size = new System.Drawing.Size(27, 27);
             this.BtnSearch.TabIndex = 70;
-            this.BtnSearch.Text = "+";
             this.BtnSearch.UseVisualStyleBackColor = true;
             this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
@@ -390,9 +391,12 @@
             // BtnManageLotes
             // 
             this.BtnManageLotes.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnManageLotes.ForeColor = System.Drawing.Color.Teal;
+            this.BtnManageLotes.Image = ((System.Drawing.Image)(resources.GetObject("BtnManageLotes.Image")));
+            this.BtnManageLotes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnManageLotes.Location = new System.Drawing.Point(16, 427);
             this.BtnManageLotes.Name = "BtnManageLotes";
-            this.BtnManageLotes.Size = new System.Drawing.Size(198, 27);
+            this.BtnManageLotes.Size = new System.Drawing.Size(178, 27);
             this.BtnManageLotes.TabIndex = 71;
             this.BtnManageLotes.Text = "GESTIONAR LOTES";
             this.BtnManageLotes.UseVisualStyleBackColor = true;

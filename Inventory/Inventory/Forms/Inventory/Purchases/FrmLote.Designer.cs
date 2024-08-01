@@ -28,33 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLote));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BtnSearch = new System.Windows.Forms.Button();
             this.DgvData = new System.Windows.Forms.DataGridView();
-            this.TxtSearch = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.BtnClose = new System.Windows.Forms.ToolStripButton();
-            this.BtnCleanSearch = new System.Windows.Forms.Button();
             this.DCIDLOTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCIDCOMPRA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCPRODUCTO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCVALOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCSTOCK = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCFECHA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TxtSearch = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.BtnClose = new System.Windows.Forms.ToolStripButton();
+            this.BtnCleanSearch = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DgvData)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnSearch
             // 
+            this.BtnSearch.Image = ((System.Drawing.Image)(resources.GetObject("BtnSearch.Image")));
             this.BtnSearch.Location = new System.Drawing.Point(860, 44);
             this.BtnSearch.Name = "BtnSearch";
             this.BtnSearch.Size = new System.Drawing.Size(27, 27);
             this.BtnSearch.TabIndex = 75;
-            this.BtnSearch.Text = "+";
             this.BtnSearch.UseVisualStyleBackColor = true;
             this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
@@ -81,6 +81,46 @@
             this.DgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvData.Size = new System.Drawing.Size(888, 192);
             this.DgvData.TabIndex = 74;
+            // 
+            // DCIDLOTE
+            // 
+            this.DCIDLOTE.HeaderText = "LOTE";
+            this.DCIDLOTE.Name = "DCIDLOTE";
+            this.DCIDLOTE.ReadOnly = true;
+            // 
+            // DCIDCOMPRA
+            // 
+            this.DCIDCOMPRA.HeaderText = "COMPRA";
+            this.DCIDCOMPRA.Name = "DCIDCOMPRA";
+            this.DCIDCOMPRA.ReadOnly = true;
+            this.DCIDCOMPRA.Width = 110;
+            // 
+            // DCPRODUCTO
+            // 
+            this.DCPRODUCTO.HeaderText = "PRODUCTO";
+            this.DCPRODUCTO.Name = "DCPRODUCTO";
+            this.DCPRODUCTO.ReadOnly = true;
+            this.DCPRODUCTO.Width = 250;
+            // 
+            // DCVALOR
+            // 
+            this.DCVALOR.HeaderText = "VALOR UNT";
+            this.DCVALOR.Name = "DCVALOR";
+            this.DCVALOR.ReadOnly = true;
+            this.DCVALOR.Width = 150;
+            // 
+            // DCSTOCK
+            // 
+            this.DCSTOCK.HeaderText = "STOCK";
+            this.DCSTOCK.Name = "DCSTOCK";
+            this.DCSTOCK.ReadOnly = true;
+            // 
+            // DCFECHA
+            // 
+            this.DCFECHA.HeaderText = "FECHA";
+            this.DCFECHA.Name = "DCFECHA";
+            this.DCFECHA.ReadOnly = true;
+            this.DCFECHA.Width = 150;
             // 
             // TxtSearch
             // 
@@ -135,53 +175,13 @@
             // 
             // BtnCleanSearch
             // 
+            this.BtnCleanSearch.Image = ((System.Drawing.Image)(resources.GetObject("BtnCleanSearch.Image")));
             this.BtnCleanSearch.Location = new System.Drawing.Point(893, 43);
             this.BtnCleanSearch.Name = "BtnCleanSearch";
             this.BtnCleanSearch.Size = new System.Drawing.Size(27, 27);
             this.BtnCleanSearch.TabIndex = 77;
-            this.BtnCleanSearch.Text = "-";
             this.BtnCleanSearch.UseVisualStyleBackColor = true;
             this.BtnCleanSearch.Click += new System.EventHandler(this.BtnCleanSearch_Click);
-            // 
-            // DCIDLOTE
-            // 
-            this.DCIDLOTE.HeaderText = "LOTE";
-            this.DCIDLOTE.Name = "DCIDLOTE";
-            this.DCIDLOTE.ReadOnly = true;
-            // 
-            // DCIDCOMPRA
-            // 
-            this.DCIDCOMPRA.HeaderText = "COMPRA";
-            this.DCIDCOMPRA.Name = "DCIDCOMPRA";
-            this.DCIDCOMPRA.ReadOnly = true;
-            this.DCIDCOMPRA.Width = 110;
-            // 
-            // DCPRODUCTO
-            // 
-            this.DCPRODUCTO.HeaderText = "PRODUCTO";
-            this.DCPRODUCTO.Name = "DCPRODUCTO";
-            this.DCPRODUCTO.ReadOnly = true;
-            this.DCPRODUCTO.Width = 250;
-            // 
-            // DCVALOR
-            // 
-            this.DCVALOR.HeaderText = "VALOR UNT";
-            this.DCVALOR.Name = "DCVALOR";
-            this.DCVALOR.ReadOnly = true;
-            this.DCVALOR.Width = 150;
-            // 
-            // DCSTOCK
-            // 
-            this.DCSTOCK.HeaderText = "STOCK";
-            this.DCSTOCK.Name = "DCSTOCK";
-            this.DCSTOCK.ReadOnly = true;
-            // 
-            // DCFECHA
-            // 
-            this.DCFECHA.HeaderText = "FECHA";
-            this.DCFECHA.Name = "DCFECHA";
-            this.DCFECHA.ReadOnly = true;
-            this.DCFECHA.Width = 150;
             // 
             // FrmLote
             // 

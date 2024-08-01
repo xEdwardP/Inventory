@@ -90,12 +90,14 @@ namespace Inventory.Forms.Inventory.Sales
             Close();
         }
 
+        // Buscador
         private void BtnSearch_Click(object sender, EventArgs e)
         {
             string search = Helpers.CleanStr(TxtSearch.Text.Trim());
             GetSales(search);
         }
 
+        // Solo Permite Ingresar Numeros
         private void TxtQuantity_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = Helpers.GetOnlyNumbers(e) ? false : true;
@@ -105,6 +107,7 @@ namespace Inventory.Forms.Inventory.Sales
         {
             e.Handled = Helpers.GetOnlyNumbers(e) ? false : true;
         }
+        // Fin
 
         // Metodo StartForm -> Estado por defecto del formulario
         private void StartForm()
@@ -209,7 +212,7 @@ namespace Inventory.Forms.Inventory.Sales
             quantity = Convert.ToInt16(TxtQuantity.Text.Trim());
         }
 
-        // METODO CalcInventory -> REALIZA LOS CALCULOS DE INVENTARIO
+        // Metodo CalcInventory -> REALIZA LOS CALCULOS DE INVENTARIO
         private void CalcInventory(string producto, int cantidad, string orderby)
         {
             string condition = "IDPRODUCTO='" + producto + "' AND ESTADO='DISPONIBLE'";
@@ -352,6 +355,7 @@ namespace Inventory.Forms.Inventory.Sales
             CmbProduct.Text = "PRD000001";
         }
 
+        // Metodo WeightedValues -> Calcular el promedio del valor del producto
         private void WeightedValues(string prod, double quant)
         {
             string condition = "ESTADO='DISPONIBLE'";
@@ -382,6 +386,7 @@ namespace Inventory.Forms.Inventory.Sales
             }
         }
 
+        // Metodo GetSales -> Obtener los registros de ventas para mostrarlos en un data gried view
         private void GetSales(string search = "")
         {
             string condition = "";
@@ -426,6 +431,7 @@ namespace Inventory.Forms.Inventory.Sales
             }
         }
 
+        // Metodo CalcBalance -> Actualiza el saldo actual del producto
         private void CalcBalance(string productsale, double totalsale)
         {
             string condition = "IDPRODUCTO='" + productsale + "'";

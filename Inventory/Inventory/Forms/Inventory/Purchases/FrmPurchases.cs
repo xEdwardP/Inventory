@@ -87,12 +87,14 @@ namespace Inventory.Forms.Inventory.Purchases
             Close();
         }
 
+        // Buscador
         private void BtnSearch_Click(object sender, EventArgs e)
         {
             string search = Helpers.CleanStr(TxtSearch.Text.Trim());
             GetPurchases(search);
         }
 
+        // Metodo Clean -> Limpia los controles
         private void Clean()
         {
             TxtNFact.Clear();
@@ -138,6 +140,7 @@ namespace Inventory.Forms.Inventory.Purchases
             DtpDate.Enabled = state;
         }
 
+        // Solo Permite Ingresar Numeros
         private void TxtPrice_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = Helpers.GetOnlyNumbers(e) ? false : true;
@@ -147,6 +150,7 @@ namespace Inventory.Forms.Inventory.Purchases
         {
             e.Handled = Helpers.GetOnlyNumbers(e) ? false : true;
         }
+        // Fin
 
         // Metodo AutoGenCode -> Genera los codigos para autores
         private void AutoGenCode()
@@ -154,7 +158,7 @@ namespace Inventory.Forms.Inventory.Purchases
             code = "CPR" + Repository.GetNext(idmodule);
         }
 
-        // Metodo ValidateInfo -> Valida la informacion ingresada en los campos
+        // Metodo ValidateData -> Valida la informacion ingresada en los campos
         private void ValidateData()
         {
             errors = 0;
@@ -200,7 +204,7 @@ namespace Inventory.Forms.Inventory.Purchases
             }
         }
 
-        // Metodo SetValues -> Almacenada la informacion de los campos en variables
+        // Metodo SetValues -> Almacenada y valida la informacion de los controles en variables
         private void SetValues()
         {
             nfact = Helpers.CleanStr(TxtNFact.Text.Trim());
@@ -211,7 +215,7 @@ namespace Inventory.Forms.Inventory.Purchases
             datep = DtpDate.Text;
         }
 
-        // METODO GetProducts -> TRAE LOS PRODUCTOS
+        // METODO GetProducts -> Obtener los registros de productos de la base de datsos
         private void GetProducts()
         {
             DataTable data = Repository.Find("PRODUCTOS", "IDPRODUCTO, PRODUCTO", "", "PRODUCTO");
@@ -221,6 +225,7 @@ namespace Inventory.Forms.Inventory.Purchases
             CmbProduct.SelectedIndex = -1;
         }
 
+        // Abrir formulario de lotes
         private void BtnManageLotes_Click(object sender, EventArgs e)
         {
             var managelotes = new Forms.Inventory.Purchases.FrmLote();
@@ -244,6 +249,7 @@ namespace Inventory.Forms.Inventory.Purchases
             //
         }
 
+        // Metodo CreateLotes -> Crea un lote de la compra
         private void CreateLote(string idpurchase)
         {
             // CODIGO LOTE
@@ -252,6 +258,7 @@ namespace Inventory.Forms.Inventory.Purchases
             string fields = "IDLOTE, IDCOMPRA, IDPRODUCTO, PRECIO, STOCK";
             string values = "'" + idlote + "', '" + idpurchase + "', '" + product + "', " + price + ", " + quantity + "";
 
+            // Guardar Lote
             if(Repository.Save("LOTES", fields, values) > 0)
             {
                 Helpers.MsgSuccess("LOTES CREADOS EXITOSAMENTE!");
@@ -259,6 +266,7 @@ namespace Inventory.Forms.Inventory.Purchases
             }
         }
 
+        // Metodo BalanceUpdate -> Actualiza el inventario y saldoactual del producto
         private void BalanceUpdate()
         {
             string condition = "IDPRODUCTO='" + product + "'";
@@ -271,6 +279,7 @@ namespace Inventory.Forms.Inventory.Purchases
             Repository.Update("PRODUCTOS", "SALDOACTUAL=" + sa + "", condition);
         }
 
+        // Metodo GetPurchases -> Obtener los registros de compras para mostrarlos en un data gried view
         private void GetPurchases(string search = "")
         {
             string condition = "";

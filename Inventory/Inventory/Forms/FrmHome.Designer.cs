@@ -127,6 +127,7 @@
             this.BtnMovements.Name = "BtnMovements";
             this.BtnMovements.Size = new System.Drawing.Size(120, 28);
             this.BtnMovements.Text = "MOVIMIENTOS";
+            this.BtnMovements.Visible = false;
             this.BtnMovements.Click += new System.EventHandler(this.BtnMovements_Click);
             // 
             // toolStripSeparator2
