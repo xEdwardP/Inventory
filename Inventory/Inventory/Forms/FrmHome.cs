@@ -52,5 +52,12 @@ namespace Inventory.Forms
         {
             Application.Exit();
         }
+
+        private void BtnProducts_Click(object sender, EventArgs e)
+        {
+            var products = new Inventory.FrmInventory();
+            products.MdiParent = this;
+            products.Show();
+        }
     }
 }

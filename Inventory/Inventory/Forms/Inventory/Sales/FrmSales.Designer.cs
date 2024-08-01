@@ -55,14 +55,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.DgvData = new System.Windows.Forms.DataGridView();
-            this.BtnSearch = new System.Windows.Forms.Button();
-            this.TxtSearch = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.CmbProduct = new System.Windows.Forms.ComboBox();
-            this.GbInventory = new System.Windows.Forms.GroupBox();
-            this.RbAverageCost = new System.Windows.Forms.RadioButton();
-            this.RbUEPS = new System.Windows.Forms.RadioButton();
-            this.RbPEPS = new System.Windows.Forms.RadioButton();
             this.DCIDVENTA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCNFACTV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCCLIENT = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,6 +63,14 @@
             this.DCTOTAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCIDLOTE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DCDATEV = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BtnSearch = new System.Windows.Forms.Button();
+            this.TxtSearch = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.CmbProduct = new System.Windows.Forms.ComboBox();
+            this.GbInventory = new System.Windows.Forms.GroupBox();
+            this.RbAverageCost = new System.Windows.Forms.RadioButton();
+            this.RbUEPS = new System.Windows.Forms.RadioButton();
+            this.RbPEPS = new System.Windows.Forms.RadioButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvData)).BeginInit();
             this.GbInventory.SuspendLayout();
@@ -344,13 +344,65 @@
             this.DgvData.Size = new System.Drawing.Size(796, 192);
             this.DgvData.TabIndex = 70;
             // 
+            // DCIDVENTA
+            // 
+            this.DCIDVENTA.HeaderText = "ID";
+            this.DCIDVENTA.Name = "DCIDVENTA";
+            this.DCIDVENTA.ReadOnly = true;
+            // 
+            // DCNFACTV
+            // 
+            this.DCNFACTV.HeaderText = "N FACTURA";
+            this.DCNFACTV.Name = "DCNFACTV";
+            this.DCNFACTV.ReadOnly = true;
+            this.DCNFACTV.Width = 110;
+            // 
+            // DCCLIENT
+            // 
+            this.DCCLIENT.HeaderText = "CLIENTE";
+            this.DCCLIENT.Name = "DCCLIENT";
+            this.DCCLIENT.ReadOnly = true;
+            this.DCCLIENT.Width = 300;
+            // 
+            // DCPRODUCT
+            // 
+            this.DCPRODUCT.HeaderText = "PRODUCTO";
+            this.DCPRODUCT.Name = "DCPRODUCT";
+            this.DCPRODUCT.ReadOnly = true;
+            this.DCPRODUCT.Width = 200;
+            // 
+            // DCQUANTITY
+            // 
+            this.DCQUANTITY.HeaderText = "CANTIDAD";
+            this.DCQUANTITY.Name = "DCQUANTITY";
+            this.DCQUANTITY.ReadOnly = true;
+            // 
+            // DCTOTAL
+            // 
+            this.DCTOTAL.HeaderText = "TOTAL";
+            this.DCTOTAL.Name = "DCTOTAL";
+            this.DCTOTAL.ReadOnly = true;
+            // 
+            // DCIDLOTE
+            // 
+            this.DCIDLOTE.HeaderText = "ID LOTE";
+            this.DCIDLOTE.Name = "DCIDLOTE";
+            this.DCIDLOTE.ReadOnly = true;
+            // 
+            // DCDATEV
+            // 
+            this.DCDATEV.HeaderText = "FECHA";
+            this.DCDATEV.Name = "DCDATEV";
+            this.DCDATEV.ReadOnly = true;
+            this.DCDATEV.Width = 140;
+            // 
             // BtnSearch
             // 
+            this.BtnSearch.Image = ((System.Drawing.Image)(resources.GetObject("BtnSearch.Image")));
             this.BtnSearch.Location = new System.Drawing.Point(785, 263);
             this.BtnSearch.Name = "BtnSearch";
             this.BtnSearch.Size = new System.Drawing.Size(27, 27);
             this.BtnSearch.TabIndex = 73;
-            this.BtnSearch.Text = "+";
             this.BtnSearch.UseVisualStyleBackColor = true;
             this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
@@ -426,58 +478,6 @@
             this.RbPEPS.TabStop = true;
             this.RbPEPS.Text = "PEPS";
             this.RbPEPS.UseVisualStyleBackColor = true;
-            // 
-            // DCIDVENTA
-            // 
-            this.DCIDVENTA.HeaderText = "ID";
-            this.DCIDVENTA.Name = "DCIDVENTA";
-            this.DCIDVENTA.ReadOnly = true;
-            // 
-            // DCNFACTV
-            // 
-            this.DCNFACTV.HeaderText = "N FACTURA";
-            this.DCNFACTV.Name = "DCNFACTV";
-            this.DCNFACTV.ReadOnly = true;
-            this.DCNFACTV.Width = 110;
-            // 
-            // DCCLIENT
-            // 
-            this.DCCLIENT.HeaderText = "CLIENTE";
-            this.DCCLIENT.Name = "DCCLIENT";
-            this.DCCLIENT.ReadOnly = true;
-            this.DCCLIENT.Width = 300;
-            // 
-            // DCPRODUCT
-            // 
-            this.DCPRODUCT.HeaderText = "PRODUCTO";
-            this.DCPRODUCT.Name = "DCPRODUCT";
-            this.DCPRODUCT.ReadOnly = true;
-            this.DCPRODUCT.Width = 200;
-            // 
-            // DCQUANTITY
-            // 
-            this.DCQUANTITY.HeaderText = "CANTIDAD";
-            this.DCQUANTITY.Name = "DCQUANTITY";
-            this.DCQUANTITY.ReadOnly = true;
-            // 
-            // DCTOTAL
-            // 
-            this.DCTOTAL.HeaderText = "TOTAL";
-            this.DCTOTAL.Name = "DCTOTAL";
-            this.DCTOTAL.ReadOnly = true;
-            // 
-            // DCIDLOTE
-            // 
-            this.DCIDLOTE.HeaderText = "ID LOTE";
-            this.DCIDLOTE.Name = "DCIDLOTE";
-            this.DCIDLOTE.ReadOnly = true;
-            // 
-            // DCDATEV
-            // 
-            this.DCDATEV.HeaderText = "FECHA";
-            this.DCDATEV.Name = "DCDATEV";
-            this.DCDATEV.ReadOnly = true;
-            this.DCDATEV.Width = 140;
             // 
             // FrmSales
             // 

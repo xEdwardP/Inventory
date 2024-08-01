@@ -44,6 +44,8 @@
             this.LblFecha = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.LblBd = new System.Windows.Forms.ToolStripStatusLabel();
+            this.BtnProducts = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.SstPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -57,6 +59,8 @@
             this.toolStripSeparator1,
             this.BtnSales,
             this.toolStripSeparator4,
+            this.BtnProducts,
+            this.toolStripSeparator5,
             this.BtnMovements,
             this.toolStripSeparator2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -186,6 +190,23 @@
             this.LblBd.Size = new System.Drawing.Size(38, 32);
             this.LblBd.Text = "---";
             // 
+            // BtnProducts
+            // 
+            this.BtnProducts.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnProducts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.BtnProducts.Image = ((System.Drawing.Image)(resources.GetObject("BtnProducts.Image")));
+            this.BtnProducts.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.BtnProducts.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnProducts.Name = "BtnProducts";
+            this.BtnProducts.Size = new System.Drawing.Size(107, 28);
+            this.BtnProducts.Text = "PRODUCTOS";
+            this.BtnProducts.Click += new System.EventHandler(this.BtnProducts_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 31);
+            // 
             // FrmHome
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -233,5 +254,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton BtnSales;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton BtnProducts;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }

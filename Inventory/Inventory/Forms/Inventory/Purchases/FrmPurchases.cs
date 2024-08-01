@@ -261,7 +261,7 @@ namespace Inventory.Forms.Inventory.Purchases
             // Guardar Lote
             if(Repository.Save("LOTES", fields, values) > 0)
             {
-                Helpers.MsgSuccess("LOTES CREADOS EXITOSAMENTE!");
+                //Helpers.MsgSuccess("LOTES CREADOS EXITOSAMENTE!");
                 Repository.SetLast("LOT");
             }
         }

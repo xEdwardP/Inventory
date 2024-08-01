@@ -61,7 +61,7 @@ namespace Inventory.Forms.Inventory.Sales
                     string condition = "IDPRODUCTO='" + product + "'";
                     int st = Convert.ToInt16(Repository.Hook("INVENTARIO", "PRODUCTOS", condition));
                     st -= quantity;
-                    if (Repository.Update("PRODUCTOS", "SALDOACTUAL='" + st + "'", condition) > 0)
+                    if (Repository.Update("PRODUCTOS", "INVENTARIO='" + st + "'", condition) > 0)
                     {
                         Helpers.MsgSuccess(Clases.Messages.MsgSave);
                         Clean();
